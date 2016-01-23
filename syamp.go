@@ -1,5 +1,6 @@
 package main
 
+
 import (
   "log"
   "os"
@@ -11,6 +12,7 @@ import (
   "io/ioutil"
   "encoding/json"
   "time"
+  "syamptools/ubusuma"
 )
 
 type WebPage struct {
@@ -165,6 +167,13 @@ func view(w http.ResponseWriter, r *http.Request)  {
 
   switch r.Method {
     case "GET":
+      webtest := ubusuma.Webapp()
+      query := r.FormValue("stdout")
+      if query == "std" {
+        fmt.Fprintf(w, fmt.Sprintf("%s", <-webtest))
+        return
+      }
+
       w.Header().Set("Content-Type", cont)
       slice := []string {
         "home-window-material",
