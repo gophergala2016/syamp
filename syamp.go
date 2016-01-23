@@ -22,6 +22,7 @@ type WebPage struct {
 func main() {
   http.HandleFunc("/home", home)
   http.HandleFunc("/login", login)
+  http.HandleFunc("/logout", logout)
   http.HandleFunc("/", static)
 
   host := "localhost:2016"
@@ -61,6 +62,52 @@ func rootUsr(cookie string) ([]string, error) {
   return usr_cookie, nil
 }
 
+
+/////////----for home-----//////
+func Build(w http.ResponseWriter, p WebPage, tmpFiles []string) {
+  tmp := template.New("template")
+
+  // header part of the WebPage
+  reVtop, err := ioutil.ReadFile("reVres/tmp/top.html")
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  var str_reVtop string = string(reVtop)
+  tmp.New("reVtop").Parse(str_reVtop)
+
+  // Window material part of the WebPage
+  reVmaterial, err := ioutil.ReadFile(fmt.Sprintf("reVres/tmp/%s.html", tmpFiles[0]))
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  var str_reVmaterial string = string(reVmaterial)
+  tmp.New("reVmaterial").Parse(str_reVmaterial)
+
+
+  // body part of the web page
+  reVbody, err := ioutil.ReadFile(fmt.Sprintf("reVres/tmp/%s.html", tmpFiles[1]))
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  var str_reVbody string = string(reVbody)
+  tmp.New("reVbody").Parse(str_reVbody)
+
+  // bottom part of the web page.
+  reVbot, err := ioutil.ReadFile("reVres/tmp/bottom.html")
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  var str_reVbot string = string(reVbot)
+  tmp.New("reVbot").Parse(str_reVbot)
+
+
+  tmp.Lookup("reVbody").Execute(w, p)
+}
+
 // Home url
 func home(w http.ResponseWriter, r *http.Request)  {
   log.Printf("%s: %s \n", r.Method, r.URL.Path)
@@ -69,17 +116,33 @@ func home(w http.ResponseWriter, r *http.Request)  {
     http.Redirect(w, r, "/login", http.StatusFound)
     return
   }
-  // Get the value of the cookie
+
+  cont := contype.FileType(r.URL.Path)
+  var page WebPage
+  page.Title = "Home"
+
+  // Get the name of the root user
   _, err = rootUsr(cookie.Value)
   if err != nil {
     log.Fatal(err)
   }
+  page.First_Name = "gopher"
 
-  fmt.Fprintf(w, "home main server")
+  switch r.Method {
+    case "GET":
+      w.Header().Set("Content-Type", cont)
+      slice := []string {
+        "home-window-material",
+        "home-body",
+      }
+      Build(w, page, slice)
+    case "POST":
+      fmt.Fprintf(w, "post home")
+  }
 }
 
 
-////////
+////////---for log in---///////
 func reVtmp(w http.ResponseWriter, p WebPage, body string) {
   tmp := template.New("template")
 
@@ -119,8 +182,6 @@ func queryUser() ([]string, error) {
     return nil, err
   }
 
-  fmt.Println(rootJsn)
-
   var usr_data []string
   usr_data = append(usr_data, rootJsn["First_Name"])
   usr_data = append(usr_data, rootJsn["Last_Name"])
@@ -159,7 +220,8 @@ func login(w http.ResponseWriter, r *http.Request) {
         cookie := http.Cookie{Name: "syamp", Value: snack, Expires: expiration}
         http.SetCookie(w, &cookie)
 
-        fmt.Fprintf(w, "Done")
+        http.Redirect(w, r, "/home", http.StatusFound)
+        return
       }else {
         page.Message = "Error you typed in the wrong Id or Password"
         reVtmp(w, page, "reVres/tmp/login-body.html")
@@ -167,6 +229,22 @@ func login(w http.ResponseWriter, r *http.Request) {
   }
 
 }
+
+
+//////--logout page---//////
+func logout(w http.ResponseWriter, r *http.Request)  {
+  log.Printf("%s: %s \n", r.Method, r.URL.Path)
+  _, err := r.Cookie("syamp")
+  if err != nil {
+    http.Redirect(w, r, "/login", http.StatusFound)
+    return
+  }
+  expiration := time.Unix(1, 0)
+  cookie := http.Cookie{Name: "syamp", MaxAge: -1, Expires: expiration}
+  http.SetCookie(w, &cookie)
+  http.Redirect(w, r, "/home", http.StatusFound)
+}
+
 
 // config map
 type Config map[string]string
@@ -178,11 +256,13 @@ func static(w http.ResponseWriter, r *http.Request) {
   if err != nil {
     log.Printf("error: %v\n", err)
   }
+  
   check := strings.Contains(r.URL.Path, cfig["dir"])
   if check == false {
     http.Redirect(w, r, "/home", http.StatusFound)
     return
   }
+
   path := r.URL.Path[1:]
   data := dirReader(path)
   cont := contype.FileType(r.URL.Path)
