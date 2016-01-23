@@ -10,6 +10,7 @@ import (
   "strings"
   "io/ioutil"
   "encoding/json"
+  "time"
 )
 
 type WebPage struct {
@@ -118,11 +119,15 @@ func queryUser() ([]string, error) {
     return nil, err
   }
 
+  fmt.Println(rootJsn)
+
   var usr_data []string
   usr_data = append(usr_data, rootJsn["First_Name"])
   usr_data = append(usr_data, rootJsn["Last_Name"])
+  usr_data = append(usr_data, rootJsn["Password"])
   usr_data = append(usr_data, rootJsn["Cookie_Key"])
-  return usr_cookie, nil
+  usr_data = append(usr_data, rootJsn["Access"])
+  return usr_data, nil
 }
 
 // Login url
@@ -145,11 +150,8 @@ func login(w http.ResponseWriter, r *http.Request) {
       if err != nil {
         log.Fatal(err)
       }
-      for _, usr := range acc {
-        if usr[0] == xusr && usr[1] == xpas {
-          check = true
-          break
-        }
+      if xusr == string(acc[0]) && xpas == string(acc[2]) {
+        check = true
       }
       if check == true {
         expiration := time.Now().Add(360 * 24 * time.Hour)
@@ -157,10 +159,9 @@ func login(w http.ResponseWriter, r *http.Request) {
         cookie := http.Cookie{Name: "syamp", Value: snack, Expires: expiration}
         http.SetCookie(w, &cookie)
 
-        http.Redirect(w, r, "/home", http.StatusFound)
-        return
+        fmt.Fprintf(w, "Done")
       }else {
-        page.Message = "Error you type in the wrong Id or Password"
+        page.Message = "Error you typed in the wrong Id or Password"
         reVtmp(w, page, "reVres/tmp/login-body.html")
       }
   }
