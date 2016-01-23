@@ -1,4 +1,7 @@
 {
-  "Developer name": "kampsy",
+  "developer-name": "kampsy",
   "icon": "icons/webserver.png",
+  "app-name": "webserver",
+  "port": "2016",
+  "host": "localhost"
 }

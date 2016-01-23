@@ -1,0 +1,47 @@
+{{template "reVtop" .Title }}
+  <body>
+    <div class="hori_animax_line_cont">
+      <div class="hori_animax_line">
+      </div>
+    </div>
+    <div class="space_line_cont">
+    </div>
+    <div class="auth_user_cont">
+      <div class="auth_main_cont">
+        <header class="auth_header_cont">
+          <img src="reVres/canvas/kay.png" class="free_icon" >
+          <div class="auth_title">
+            Syamp
+          </div>
+          <div class="auth_error">
+            {{.Message}}
+          </div>
+        </header>
+        <form action="login" method="post">
+          <div class="input_main_cont">
+            <div class="input_lable">
+              User ID
+            </div>
+            <input type="text" name="syamp_name" class="auth_user" autocomplete="off">
+          </div>
+          <div class="input_main_cont">
+            <div class="input_lable">
+              Password
+            </div>
+            <input type="password" name="syamp_pass" class="auth_pass" autocomplete="off">
+          </div>
+
+          <div class="input_main_cont">
+            <input type="submit" value="Login" class="kalibu-button">
+          </div>
+        </form>
+        <footer class="auth_footer_cont">
+          <div class="auth_footer_text">
+            Copyright (c) 2016 Gopher Gala All Rights Reserved.
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script type="text/javascript" src="reVres/js/syamp.js"></script>
+  </body>
+{{template "reVbot"}}
