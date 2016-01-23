@@ -23,6 +23,7 @@ func main() {
   http.HandleFunc("/home", home)
   http.HandleFunc("/login", login)
   http.HandleFunc("/logout", logout)
+  http.HandleFunc("/view", view)
   http.HandleFunc("/", static)
 
   host := "localhost:2016"
@@ -134,6 +135,40 @@ func home(w http.ResponseWriter, r *http.Request)  {
       slice := []string {
         "home-window-material",
         "home-body",
+      }
+      Build(w, page, slice)
+    case "POST":
+      fmt.Fprintf(w, "post home")
+  }
+}
+
+
+// view full information about the app
+func view(w http.ResponseWriter, r *http.Request)  {
+  log.Printf("%s: %s \n", r.Method, r.URL.Path)
+  cookie, err := r.Cookie("syamp")
+  if err != nil {
+    http.Redirect(w, r, "/login", http.StatusFound)
+    return
+  }
+
+  cont := contype.FileType(r.URL.Path)
+  var page WebPage
+  page.Title = "View"
+
+  // Get the name of the root user
+  _, err = rootUsr(cookie.Value)
+  if err != nil {
+    log.Fatal(err)
+  }
+  page.First_Name = "gopher"
+
+  switch r.Method {
+    case "GET":
+      w.Header().Set("Content-Type", cont)
+      slice := []string {
+        "home-window-material",
+        "view-body",
       }
       Build(w, page, slice)
     case "POST":
@@ -256,7 +291,7 @@ func static(w http.ResponseWriter, r *http.Request) {
   if err != nil {
     log.Printf("error: %v\n", err)
   }
-  
+
   check := strings.Contains(r.URL.Path, cfig["dir"])
   if check == false {
     http.Redirect(w, r, "/home", http.StatusFound)

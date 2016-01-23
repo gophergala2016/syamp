@@ -613,3 +613,23 @@ div.app-name {
   text-align: center;
   margin-bottom: 2px;
 }
+
+
+/*############################################################################*/
+/*View page*/
+div.log_output {
+  height: 200px;
+  width: 100%;
+  display: inline-block;
+  background-color: #333333;
+  color: #FFF;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+div.stdout_text {
+  margin-left: 5px;
+  width: 95%;
+  height: auto;
+  display: block;
+}

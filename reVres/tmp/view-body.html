@@ -1,0 +1,71 @@
+{{template "reVtop" .Title}}
+  <body>
+    <div class="hori_animax_line_cont">
+      <div class="hori_animax_line">
+      </div>
+    </div>
+    <div class="space_line_cont">
+    </div>
+    {{template "reVmaterial" .First_Name}}
+    <div class="syamp-space"></div>
+    <div class="syamp-window-constraction">
+      <div class="left-card">
+        <header class="card-heading">
+          <div class="card-heading-text">
+            Apps Dashbored
+          </div>
+        </header>
+        <a href="/home">
+          <div class="card-action-text">
+            Running
+          </div>
+        </a>
+        <a href="apps">
+          <div class="card-action-text-2">
+            All Apps
+          </div>
+        </a>
+      </div>
+      <div class="right-card">
+        <header class="card-heading">
+          <div class="card-heading-text-2">
+            Running Apps
+          </div>
+        </header>
+        <div class="card-body-cont">
+          <div class="input_main_cont">
+            <div class="input_lable">
+              Webserver
+            </div>
+            <img src="reVres/icons/webserver.png" alt="Profile" class="right-card-profile-img" />
+          </div>
+          <div class="input_main_cont">
+            <div class="input_lable">
+              Restart with new Host and Ip
+            </div>
+            <input type="text" name="aster_name" class="auth_user" placeholder="127.0.0.1:2016">
+          </div>
+          <div class="input_main_cont">
+            <button type="button"class="kalibu-button">Restart</button>
+          </div>
+        </div>
+        <div class="horiz_line"></div>
+        <div class="card-body-cont">
+          <div class="input_lable">
+            Stdout
+          </div>
+          <div class="log_output">
+            <div class="stdout_text">
+              hello
+            </div>
+            <div class="stdout_text">
+              hello
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="reVres/js/syamp.js"></script>
+    <script type="text/javascript" src="reVres/js/menu.js"></script>
+  </body>
+{{template "reVbot"}}
