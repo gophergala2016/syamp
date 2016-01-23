@@ -12,7 +12,7 @@ import (
   "io/ioutil"
   "encoding/json"
   "time"
-  "syamptools/ubusuma"
+  "github.com/kalibu_tech_project/ubusuma"
 )
 
 type WebPage struct {
