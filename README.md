@@ -1,4 +1,4 @@
-<h3>Syamp</h3>
+<h3>Syam{p}</h3>
 <code>App for Internet Of Things</code>
 <p>2015 was the year of containers, 2016 will be the Year of IOT</p>
 <pre> 
