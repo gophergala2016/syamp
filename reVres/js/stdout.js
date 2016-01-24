@@ -21,7 +21,7 @@ function stdout() {
 	req.send(null);
 }
 
-setInterval(stdout, 2000)
+setInterval(stdout, 3000)
 
 var kill_but = document.getElementById("kill_button");
 var pid = document.getElementById("kill_pid");

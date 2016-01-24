@@ -45,7 +45,7 @@ func RunningUser() <-chan string {
   go func() {
     comm := "ps"
     args := []string {
-      "-a",
+      "-x",
     }
     cmd := exec.Command(comm, args...)
     byt, err := cmd.Output()
