@@ -19,6 +19,11 @@ go run syamp.go "192.168.1.2:2016"
 <code>Password: root</code>
 ![login](https://github.com/gophergala2016/kalibu_tech_project/blob/master/img/login.png)
 
+<hr>
+![home](https://github.com/gophergala2016/kalibu_tech_project/blob/master/img/home.png)
+<hr>
+![home](https://github.com/gophergala2016/kalibu_tech_project/blob/master/img/home2.png)
+
 ## License
 MIT
 
