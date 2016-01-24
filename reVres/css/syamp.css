@@ -420,6 +420,7 @@ div.left-card {
   background-color: #FFF;
   border: 1px solid #D8D8D8;
   margin-right: 15px;
+  margin-bottom: 5%;
   float: left;
 }
 div.right-card {
@@ -428,7 +429,16 @@ div.right-card {
   border: 1px solid #D8D8D8;
   background-color: #FFF;
   float: left;
-  margin-bottom: 15px;
+  margin-bottom: 1px;
+}
+
+@media all and (max-width: 985px) {
+  div.left-card {
+    width: 100%;
+  }
+  div.right-card {
+    width: 100%;
+  }
 }
 
 header.card-heading {
@@ -630,7 +640,7 @@ div.log_output {
   display: inline-block;
   background-color: #333333;
   color: #FFF;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: auto;
   max-height: 500px;
 }
@@ -640,7 +650,7 @@ div.terminal_output {
   display: inline-block;
   background-color: #333333;
   color: #FFF;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: auto;
 }
 
