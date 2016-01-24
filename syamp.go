@@ -12,7 +12,7 @@ import (
   "io/ioutil"
   "encoding/json"
   "time"
-  "github.com/kalibu_tech_project/ubusuma"
+  "github.com/syamp/ubusuma"
 )
 
 type WebPage struct {
@@ -64,7 +64,7 @@ func rootUsr(cookie string) ([]string, error) {
   }
 
   var usr_cookie []string
-  usr_cookie = append(usr_cookie, rootJsn["Cookie_Key"])
+  usr_cookie = append(usr_cookie, rootJsn["First_Name"])
   return usr_cookie, nil
 }
 
@@ -128,11 +128,11 @@ func home(w http.ResponseWriter, r *http.Request)  {
   page.Title = "Home"
 
   // Get the name of the root user
-  _, err = rootUsr(cookie.Value)
+  yugi, err := rootUsr(cookie.Value)
   if err != nil {
     log.Fatal(err)
   }
-  page.First_Name = "gopher"
+  page.First_Name = yugi[0]
 
   // Add the values from Metal function to the page struct
   metalOut := ubusuma.Metal()
