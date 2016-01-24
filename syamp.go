@@ -13,6 +13,7 @@ import (
   "encoding/json"
   "time"
   "github.com/syamp/ubusuma"
+  "github.com/syamp/random"
 )
 
 type WebPage struct {
@@ -42,7 +43,7 @@ func main() {
   }
 }
 
-// Read json from drive
+// this function reads files form the drive and returns a slice of bytes
 func dirReader(f string) []byte {
   cont, err := ioutil.ReadFile(f)
   if err != nil {
@@ -68,8 +69,22 @@ func rootUsr(cookie string) ([]string, error) {
   return usr_cookie, nil
 }
 
+// Returns a string cookie
+func rootCoo(cookie string) (string, error) {
+  jsn := dirReader("usr/root.json")
+  var rootJsn UsrStr
+  err := json.Unmarshal(jsn, &rootJsn)
+  if err != nil {
+    return random.RandStr(5), err // what are olds?
+  }
 
-/////////----for home-----//////
+  kie := fmt.Sprintf("%s", rootJsn["Cookie_Key"])
+  return kie, nil
+}
+
+
+// This reads Template html files, creates the page and then writes
+// the writes to the response writer
 func Build(w http.ResponseWriter, p WebPage, tmpFiles []string) {
   tmp := template.New("template")
 
@@ -114,7 +129,7 @@ func Build(w http.ResponseWriter, p WebPage, tmpFiles []string) {
   tmp.Lookup("reVbody").Execute(w, p)
 }
 
-// view full information about the app
+// The home page of syamp
 func home(w http.ResponseWriter, r *http.Request)  {
   log.Printf("%s: %s \n", r.Method, r.URL.Path)
   cookie, err := r.Cookie("syamp")
@@ -123,18 +138,33 @@ func home(w http.ResponseWriter, r *http.Request)  {
     return
   }
 
+  // Checks for cookie injections
+  cook, err := rootCoo(cookie.Value)
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  if cookie.Value != cook {
+    http.Redirect(w, r, "/login", http.StatusFound)
+    return
+  }
+
+  // Use the contype to get the write media type from
+  // Url
   cont := contype.FileType(r.URL.Path)
   var page WebPage
   page.Title = "Home"
 
-  // Get the name of the root user
+
+  // Add the name of root user to Webpage struct
   yugi, err := rootUsr(cookie.Value)
   if err != nil {
     log.Fatal(err)
   }
   page.First_Name = yugi[0]
 
-  // Add the values from Metal function to the page struct
+  // Metal returns s reciver Channel of type []slice with value to add to
+  // the webpage struct
   metalOut := ubusuma.Metal()
   metalVal := <-metalOut
   page.Distributor = metalVal[0]
@@ -144,14 +174,16 @@ func home(w http.ResponseWriter, r *http.Request)  {
 
   switch r.Method {
     case "GET":
+
       query := r.FormValue("stdout")
       if query == "std" {
+        // RunningUser returns s reciver Channel of type string.
         running := ubusuma.RunningUser()
         fmt.Fprintf(w, <-running)
         return
       }
 
-      // kill switch
+      // RunningUser returns s reciver Channel of type string.
       pid := r.FormValue("term")
       if pid != "" {
         ter_msg := ubusuma.Kill(pid)
@@ -159,6 +191,7 @@ func home(w http.ResponseWriter, r *http.Request)  {
         return
       }
 
+      // RunningUser returns s reciver Channel of type string.
       con_cmd := r.FormValue("cmd")
       if con_cmd != "" {
         console := ubusuma.Term(con_cmd)
@@ -166,18 +199,22 @@ func home(w http.ResponseWriter, r *http.Request)  {
         return
       }
 
+
       w.Header().Set("Content-Type", cont)
+
       slice := []string {
         "home-window-material",
         "home-body",
       }
       Build(w, page, slice)
     case "POST":
+      // This does nothing
       fmt.Fprintf(w, "post home")
   }
 }
 
-////////---for log in---///////
+// This reads Template html files, creates the page and then writes
+// the writes to the response writer
 func reVtmp(w http.ResponseWriter, p WebPage, body string) {
   tmp := template.New("template")
 
@@ -207,11 +244,11 @@ func reVtmp(w http.ResponseWriter, p WebPage, body string) {
 
   tmp.Lookup("reVbody").Execute(w, p)
 }
-/////
 
+// Returns a slice of strings user data
 func queryUser() ([]string, error) {
-  jsn := dirReader("usr/root.json")
-  var rootJsn UsrStr
+  jsn := dirReader("usr/root.json")// remember dirReader from line 46
+  var rootJsn UsrStr// remember the UsrStr type on line 56?
   err := json.Unmarshal(jsn, &rootJsn)
   if err != nil {
     return nil, err
@@ -226,7 +263,7 @@ func queryUser() ([]string, error) {
   return usr_data, nil
 }
 
-// Login url
+// Login page
 func login(w http.ResponseWriter, r *http.Request) {
   log.Printf("%s: %s \n", r.Method, r.URL.Path)
   var page WebPage
@@ -251,14 +288,14 @@ func login(w http.ResponseWriter, r *http.Request) {
       }
       if check == true {
         expiration := time.Now().Add(360 * 24 * time.Hour)
-        snack := "xxxxx"
+        snack := string(acc[3])
         cookie := http.Cookie{Name: "syamp", Value: snack, Expires: expiration}
         http.SetCookie(w, &cookie)
 
         http.Redirect(w, r, "/home", http.StatusFound)
         return
       }else {
-        page.Message = "Error you typed in the wrong Id or Password"
+        page.Message = "syam{p} thinks the information was wrong"
         reVtmp(w, page, "reVres/tmp/login-body.html")
       }
   }
