@@ -8,9 +8,10 @@ moniter and kill programms etc in real time.
 I built this app so that i can control and moniter programs on my Raspberypi B+ 2 running snappy ubuntu
 core 15.04.
 Currently, i use my laptop for this(i ssh into my pi). I hate that i have to move 
-to my computer room to power of my pi when am outside hunging out with friends, having my lunch and just feeling
+to my computer room to power of my pi when am outside hunging out with friends, having my lunch or just feeling
 lazy to get out of bed when iam sleepy.
-Now i can do it using my phone!
+
+Now i can use my phone!
 
 ## Installation
 go get github.com/gophergala2016/syamp
