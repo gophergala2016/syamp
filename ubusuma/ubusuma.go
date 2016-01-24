@@ -137,6 +137,9 @@ func Term(cd string) <-chan string {
       }
       c <- fmt.Sprintf("%s", byt)
       return
+    }else {
+      c <- fmt.Sprintf("%s", "syam{p} currently does not support that manny arguments")
+      return
     }
 
   }()
