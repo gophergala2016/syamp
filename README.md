@@ -26,7 +26,7 @@ MIT
 The Secure https server serves you you with a crisp interface.
 
 ### UI
-The User interface is simple, morden, crisp, easy to work with.
+The User interface is simple, morden and easy to work with.
 well beter than a terminal.
 
 Developer
