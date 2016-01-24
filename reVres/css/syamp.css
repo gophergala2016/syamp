@@ -429,7 +429,7 @@ div.right-card {
   border: 1px solid #D8D8D8;
   background-color: #FFF;
   float: left;
-  margin-bottom: 1px;
+  margin-bottom: 15px;
 }
 
 @media all and (max-width: 985px) {
