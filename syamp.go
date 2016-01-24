@@ -19,13 +19,16 @@ type WebPage struct {
   Title string
   First_Name string
   Message string
+  Distributor string
+  Description string
+  Release string
+  Codename string
 }
 
 func main() {
   http.HandleFunc("/home", home)
   http.HandleFunc("/login", login)
   http.HandleFunc("/logout", logout)
-  http.HandleFunc("/all", all)
   http.HandleFunc("/", static)
 
   host := "localhost:2016"
@@ -131,20 +134,35 @@ func home(w http.ResponseWriter, r *http.Request)  {
   }
   page.First_Name = "gopher"
 
+  // Add the values from Metal function to the page struct
+  metalOut := ubusuma.Metal()
+  metalVal := <-metalOut
+  page.Distributor = metalVal[0]
+  page.Description = metalVal[1]
+  page.Release = metalVal[2]
+  page.Codename = metalVal[3]
+
   switch r.Method {
     case "GET":
       query := r.FormValue("stdout")
       if query == "std" {
-        running := ubusuma.Runningapps()
+        running := ubusuma.RunningUser()
         fmt.Fprintf(w, <-running)
         return
       }
 
-      // Ther signal
-      kill := r.FormValue("term")
-      if kill != "" {
-        ter_msg := ubusuma.Term(kill)
+      // kill switch
+      pid := r.FormValue("term")
+      if pid != "" {
+        ter_msg := ubusuma.Kill(pid)
         fmt.Fprintf(w, <-ter_msg)
+        return
+      }
+
+      con_cmd := r.FormValue("cmd")
+      if con_cmd != "" {
+        console := ubusuma.Term(con_cmd)
+        fmt.Fprintf(w, <-console)
         return
       }
 
@@ -158,40 +176,6 @@ func home(w http.ResponseWriter, r *http.Request)  {
       fmt.Fprintf(w, "post home")
   }
 }
-
-// view full information about the app
-func all(w http.ResponseWriter, r *http.Request)  {
-  log.Printf("%s: %s \n", r.Method, r.URL.Path)
-  cookie, err := r.Cookie("syamp")
-  if err != nil {
-    http.Redirect(w, r, "/login", http.StatusFound)
-    return
-  }
-
-  cont := contype.FileType(r.URL.Path)
-  var page WebPage
-  page.Title = "All Apps"
-
-  // Get the name of the root user
-  _, err = rootUsr(cookie.Value)
-  if err != nil {
-    log.Fatal(err)
-  }
-  page.First_Name = "gopher"
-
-  switch r.Method {
-    case "GET":
-      w.Header().Set("Content-Type", cont)
-      slice := []string {
-        "home-window-material",
-        "all-body",
-      }
-      Build(w, page, slice)
-    case "POST":
-      fmt.Fprintf(w, "post home")
-  }
-}
-
 
 ////////---for log in---///////
 func reVtmp(w http.ResponseWriter, p WebPage, body string) {

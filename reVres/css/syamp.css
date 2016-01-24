@@ -632,6 +632,7 @@ div.log_output {
   color: #FFF;
   overflow-x: hidden;
   overflow-y: auto;
+  max-height: 500px;
 }
 div.terminal_output {
   height: 200px;
@@ -643,7 +644,7 @@ div.terminal_output {
   overflow-y: auto;
 }
 
-div.stdout_text {
+pre.stdout_text, pre.command_text {
   margin-left: 5px;
   width: 95%;
   height: auto;

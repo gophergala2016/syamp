@@ -12,17 +12,27 @@
       <div class="left-card">
         <header class="card-heading">
           <div class="card-heading-text">
-            Apps Dashbored
+            Linux Infor
           </div>
         </header>
+        <div class="input_lable">
+          <img src="reVres/canvas/linux.jpg" alt="" class="app-icon"/>
+        </div>
+        <div class="card-action-text-5">
+          {{.Distributor}}
+        </div>
+        <div class="card-action-text-5">
+          {{.Description}}
+        </div>
+        <div class="card-action-text-5">
+          {{.Release}}
+        </div>
+        <div class="card-action-text-5">
+          {{.Codename}}
+        </div>
         <a href="/home">
           <div class="card-action-text">
             Running
-          </div>
-        </a>
-        <a href="/all">
-          <div class="card-action-text-2">
-            All Apps
           </div>
         </a>
       </div>
@@ -64,12 +74,6 @@
               Command
             </div>
             <input type="text" class="auth_user" id="cmd">
-          </div>
-          <div class="input_main_cont">
-            <div class="input_lable">
-              Arguments
-            </div>
-            <input type="text" class="auth_user" id="cmd_args">
           </div>
           <div class="input_main_cont">
             <button type="button" class="kalibu-button" id="cmd_button">Run</button>
