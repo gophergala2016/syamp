@@ -1,5 +1,6 @@
 ![syamp](https://github.com/gophergala2016/syamp/blob/master/reVres/canvas/kay.png)
 ## syam{p}
+<a href="https://youtu.be/QiSiYVDjEw4">Play Screencast</a>
 
 syam{p} |pronounced as simp| brings the full power of the Linux Shell directly to your web browser. Run commands,
 monitor and kill programms etc in real time.
