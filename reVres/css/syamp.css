@@ -645,13 +645,14 @@ div.log_output {
   max-height: 500px;
 }
 div.terminal_output {
-  height: 200px;
+  height: auto;
   width: 100%;
   display: inline-block;
   background-color: #333333;
   color: #FFF;
   overflow-x: auto;
   overflow-y: auto;
+  max-height: 500px;
 }
 
 pre.stdout_text, pre.command_text {
