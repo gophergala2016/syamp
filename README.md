@@ -13,6 +13,11 @@ lazy to get out of bed when iam sleepy.
 
 Now i can use my phone!
 
+Note:
+-----
+You need to run syamp on the system you want to control.
+syam{p} only supports linux at the moment.
+
 ## Installation
 go get github.com/gophergala2016/syamp
 
@@ -21,28 +26,26 @@ go run syamp.go
 <br>
 go run syamp.go "192.168.1.2:2016"
 
+## Security
+syam{p} runs an https server. All your commands are encypted with a 2048bit key in transit.
+![login](https://github.com/gophergala2016/syamp/blob/master/img/keys.png)
+
 <h3>Login Page</h3>
 <code>UserID: gopher</code>
 <br>
 <code>Password: root</code>
 ![login](https://github.com/gophergala2016/syamp/blob/master/img/login.png)
-
 <hr>
 ![home](https://github.com/gophergala2016/syamp/blob/master/img/home.png)
 <hr>
 ![home](https://github.com/gophergala2016/syamp/blob/master/img/home2.png)
 
-## License
-MIT
-
-### Server
-Secure https server serves you you with a crisp interface.
-
-### UI
+### User Interface
 The User interface is simple, morden and easy to work with.
-well beter than a terminal.
+
+## License
+MIT see license file
 
 Developer
 ---------
-
 kampamba chanda (a.k.a kampsy)
