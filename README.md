@@ -7,33 +7,30 @@ No more relying on ssh to administer your remote IOT devices in the local
 or wide area network.
 
 ## Installation
-
-   go get github.com/gophergala2016/kalibu_tech_project
+go get github.com/gophergala2016/kalibu_tech_project
 
 ## Running
-  go run syamp.go
-  go run syamp.go "192.168.1.2:2016"
+go run syamp.go
+<br>
+go run syamp.go "192.168.1.2:2016"
 
-## Login Page
-
+<h3>Login Page</h3>
+<code>UserID: gopher</code>
+<br>
+<code>Password: root</code>
+![login](https://github.com/gophergala2016/kalibu_tech_project/blob/master/img/login.png)
 
 ## License
-
 MIT
 
 ### Server
-
 The Secure https server svers you you with a crisp interface tha is buit by the
 backend.
 
-The works in
-
 ### Frontend
-
 The frontend is Fluid, crisp and easy to work with.
 the different information that have been recolected in a graphical and
 easy way.
-
 
 Developer
 ---------
