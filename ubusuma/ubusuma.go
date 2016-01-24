@@ -83,13 +83,62 @@ func Kill(pid string) <-chan string {
 func Term(cd string) <-chan string {
   c := make(chan string)
   go func() {
-    comm := cd
-    cmd := exec.Command(comm)
-    byt, err := cmd.Output()
-    if err != nil {
-      c <- fmt.Sprintf("%s", err)
+    var comm string // this is used below
+
+    // Check if there is a space at prefix
+    checkfront := strings.HasPrefix(cd, " ")
+    if checkfront == true {
+      c <- fmt.Sprintf("%s", "Clear space at the Prefix")
+      return
     }
-    c <- fmt.Sprintf("%s", byt)
+
+    // Check if there is a space at suffix
+    checkend := strings.HasSuffix(cd, " ")
+    if checkend == true {
+      c <- fmt.Sprintf("%s", "Clear space at the Suffix")
+      return
+    }
+
+    // collect all the spaces and dump them
+    // in the spaces slice
+    var spaces []int
+    for i := 0; i < len(cd); i++ {
+      if string(cd[i]) == " " {
+        spaces = append(spaces, i)
+      }
+    }
+
+    // Run the single commant without arguments
+    if len(spaces) == 0 {
+      comm = cd
+      cmd := exec.Command(comm)
+      byt, err := cmd.Output()
+      if err != nil {
+        c <- fmt.Sprintf("%s", err)
+      }
+      c <- fmt.Sprintf("%s", byt)
+      return
+    }else if len(spaces) == 1 { // Now deal with one argument
+      cmdSlice := spaces[0]
+      comm = cd[:cmdSlice] // remember this variable?
+
+      // argument holder
+      var args []string
+
+      // holds the argument with a space at the prefix
+      // waiting to be removed
+      ar := cd[cmdSlice:]
+      args = append(args, ar[1:])
+
+      cmd := exec.Command(comm, args...)
+      byt, err := cmd.Output()
+      if err != nil {
+        c <- fmt.Sprintf("%s", err)
+      }
+      c <- fmt.Sprintf("%s", byt)
+      return
+    }
+
   }()
 
   return c

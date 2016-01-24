@@ -1,5 +1,6 @@
 var req = new XMLHttpRequest();
 
+
 var output = document.querySelector("pre.stdout_text");
 function stdout() {
 	var q = "std";
@@ -20,7 +21,7 @@ function stdout() {
 	req.send(null);
 }
 
-setInterval(stdout, 1000)
+setInterval(stdout, 2000)
 
 var kill_but = document.getElementById("kill_button");
 var pid = document.getElementById("kill_pid");
