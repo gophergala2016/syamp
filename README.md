@@ -4,7 +4,8 @@
 syamp pronounced simp brings the full power of the Linux Shell directly to your web browser. Run commands,
 moniter and kill programms etc in real time.
 
-## Personal Benefit
+Personal Benefit
+--------------------
 I built this app so that i can control and moniter programs on my Raspberypi B+ 2 running snappy ubuntu
 core 15.04.
 Currently, i use my laptop for this(i ssh into my pi). I hate that i have to move 
@@ -18,15 +19,18 @@ Note:
 You need to run syamp on the system you want to control.
 syam{p} only supports linux at the moment.
 
-## Installation
+Installation
+-------------
 go get github.com/gophergala2016/syamp
 
-## Running
+Running
+--------
 go run syamp.go
 <br>
 go run syamp.go "192.168.1.2:2016"
 
-## Security
+Security
+--------
 syam{p} runs an https server. All your commands are encypted with a 2048bit key in transit.
 ![login](https://github.com/gophergala2016/syamp/blob/master/img/keys.png)
 
@@ -40,10 +44,12 @@ syam{p} runs an https server. All your commands are encypted with a 2048bit key 
 <hr>
 ![home](https://github.com/gophergala2016/syamp/blob/master/img/home2.png)
 
-### User Interface
+User Interface
+---------------
 The User interface is simple, morden and easy to work with.
 
-## License
+License
+-------
 MIT see license file
 
 Developer
