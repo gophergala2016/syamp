@@ -29,31 +29,56 @@
       <div class="right-card">
         <header class="card-heading">
           <div class="card-heading-text-2">
-            Running Apps
+            Running Programmes
           </div>
         </header>
-        <div class="running-cont">
-          <div class="app-card">
-            <img src="reVres/icons/webserver.png" alt="webserver" class="app-icon"/>
-            <div class="card-action-text-5">
-              Webserver
+        <div class="card-body-cont">
+          <div class="input_lable">
+            Running(user)
+          </div>
+          <div class="log_output">
+            <pre class="stdout_text">
+            </pre>
+          </div>
+          <div class="input_main_cont">
+            <div class="input_lable" id>
+              Program PID <code id="kill_label"></code>
             </div>
-            <div class="card-body-cont">
-              <button type="button"class="kalibu-button">Restart</button>
+            <input type="text" name="app_stop" id="kill_pid" class="auth_user">
+          </div>
+          <div class="input_main_cont">
+            <button type="button"class="kalibu-decline-button" id="kill_button">Kill</button>
+          </div>
+        </div>
+        <div class="horiz_line"></div>
+        <div class="card-body-cont">
+          <div class="input_lable">
+            Terminal
+          </div>
+          <div class="terminal_output">
+            <pre class="command_text">
+            </pre>
+          </div>
+          <div class="input_main_cont">
+            <div class="input_lable">
+              Command
             </div>
-            <div class="card-body-cont">
-              <button type="button"class="kalibu-decline-button">Stop</button>
+            <input type="text" class="auth_user" id="cmd">
+          </div>
+          <div class="input_main_cont">
+            <div class="input_lable">
+              Arguments
             </div>
-            <a href="/view">
-              <div class="card-action-text-3">
-                More
-              </div>
-            </a>
+            <input type="text" class="auth_user" id="cmd_args">
+          </div>
+          <div class="input_main_cont">
+            <button type="button" class="kalibu-button" id="cmd_button">Run</button>
           </div>
         </div>
       </div>
     </div>
     <script type="text/javascript" src="reVres/js/syamp.js"></script>
     <script type="text/javascript" src="reVres/js/menu.js"></script>
+    <script type="text/javascript" src="reVres/js/stdout.js"></script>
   </body>
 {{template "reVbot"}}

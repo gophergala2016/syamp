@@ -625,6 +625,15 @@ div.app-name {
 /*############################################################################*/
 /*View page*/
 div.log_output {
+  height: auto;
+  width: 100%;
+  display: inline-block;
+  background-color: #333333;
+  color: #FFF;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+div.terminal_output {
   height: 200px;
   width: 100%;
   display: inline-block;

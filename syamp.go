@@ -25,7 +25,6 @@ func main() {
   http.HandleFunc("/home", home)
   http.HandleFunc("/login", login)
   http.HandleFunc("/logout", logout)
-  http.HandleFunc("/view", view)
   http.HandleFunc("/all", all)
   http.HandleFunc("/", static)
 
@@ -112,7 +111,7 @@ func Build(w http.ResponseWriter, p WebPage, tmpFiles []string) {
   tmp.Lookup("reVbody").Execute(w, p)
 }
 
-// Home url
+// view full information about the app
 func home(w http.ResponseWriter, r *http.Request)  {
   log.Printf("%s: %s \n", r.Method, r.URL.Path)
   cookie, err := r.Cookie("syamp")
@@ -134,6 +133,21 @@ func home(w http.ResponseWriter, r *http.Request)  {
 
   switch r.Method {
     case "GET":
+      query := r.FormValue("stdout")
+      if query == "std" {
+        running := ubusuma.Runningapps()
+        fmt.Fprintf(w, <-running)
+        return
+      }
+
+      // Ther signal
+      kill := r.FormValue("term")
+      if kill != "" {
+        ter_msg := ubusuma.Term(kill)
+        fmt.Fprintf(w, <-ter_msg)
+        return
+      }
+
       w.Header().Set("Content-Type", cont)
       slice := []string {
         "home-window-material",
@@ -177,48 +191,6 @@ func all(w http.ResponseWriter, r *http.Request)  {
       fmt.Fprintf(w, "post home")
   }
 }
-
-
-// view full information about the app
-func view(w http.ResponseWriter, r *http.Request)  {
-  log.Printf("%s: %s \n", r.Method, r.URL.Path)
-  cookie, err := r.Cookie("syamp")
-  if err != nil {
-    http.Redirect(w, r, "/login", http.StatusFound)
-    return
-  }
-
-  cont := contype.FileType(r.URL.Path)
-  var page WebPage
-  page.Title = "View"
-
-  // Get the name of the root user
-  _, err = rootUsr(cookie.Value)
-  if err != nil {
-    log.Fatal(err)
-  }
-  page.First_Name = "gopher"
-
-  switch r.Method {
-    case "GET":
-      query := r.FormValue("stdout")
-      if query == "std" {
-        running := ubusuma.Runningapps()
-        fmt.Fprintf(w, <-running)
-        return
-      }
-
-      w.Header().Set("Content-Type", cont)
-      slice := []string {
-        "home-window-material",
-        "view-body",
-      }
-      Build(w, page, slice)
-    case "POST":
-      fmt.Fprintf(w, "post home")
-  }
-}
-
 
 
 ////////---for log in---///////

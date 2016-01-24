@@ -38,7 +38,7 @@ func Webapp() <-chan string {
   return c
 }
 
-// Generator
+// Generator show running programs
 func Runningapps() <-chan string {
   c := make(chan string)
   go func() {
@@ -52,10 +52,27 @@ func Runningapps() <-chan string {
     if err != nil {
       fmt.Println(err)
     }
-    for {
-      c <- fmt.Sprintf("%s", byt)
-      time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+    c <- fmt.Sprintf("%s", byt)
+  }()
+
+  return c
+}
+
+// kill process
+func Term(pid string) <-chan string {
+  c := make(chan string)
+  go func() {
+    comm := "kill"
+    var args []string
+    args = append(args, "-KILL")
+    args = append(args, pid)
+
+    cmd := exec.Command(comm, args...)
+    err := cmd.Run()
+    if err != nil {
+      fmt.Println(err)
     }
+    c <- fmt.Sprintf("%s", "Killed")
   }()
 
   return c
