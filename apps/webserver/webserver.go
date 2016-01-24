@@ -6,6 +6,7 @@ import (
   "log"
   "time"
   "math/rand"
+  "io/ioutil"
 )
 // this is just a test server it prints to Stdout
 func main() {
@@ -14,7 +15,10 @@ func main() {
   log_data := applog()
   go func() {
     for {
-      fmt.Println(<-log_data)
+      err := ioutil.WriteFile("log/log.txt", <-log_data, 777)
+      if err != nil {
+        fmt.Println(err)
+      }
     }
   }()
 

@@ -1,0 +1,7 @@
+{
+  "1": {
+    "name": "webserver",
+    "running": "no",
+    "cng": "webserver.cnf"
+  }
+}

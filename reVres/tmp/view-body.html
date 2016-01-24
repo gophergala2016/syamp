@@ -20,7 +20,7 @@
             Running
           </div>
         </a>
-        <a href="apps">
+        <a href="/all">
           <div class="card-action-text-2">
             All Apps
           </div>
@@ -29,15 +29,25 @@
       <div class="right-card">
         <header class="card-heading">
           <div class="card-heading-text-2">
-            Running Apps
+            Running Programmes
           </div>
         </header>
         <div class="card-body-cont">
+          <div class="input_lable">
+            Terminal
+          </div>
+          <div class="log_output">
+            <pre class="stdout_text">
+            </pre>
+          </div>
+        </div>
+        <div class="horiz_line"></div>
+        <div class="card-body-cont">
           <div class="input_main_cont">
             <div class="input_lable">
-              Webserver
+              App PID
             </div>
-            <img src="reVres/icons/webserver.png" alt="Profile" class="right-card-profile-img" />
+            <input type="text" name="aster_name" class="auth_user" placeholder="127.0.0.1:2016">
           </div>
           <div class="input_main_cont">
             <div class="input_lable">
@@ -51,13 +61,14 @@
         </div>
         <div class="horiz_line"></div>
         <div class="card-body-cont">
-          <div class="input_lable">
-            Stdout
-          </div>
-          <div class="log_output">
-            <div class="stdout_text">
-              hello
+          <div class="input_main_cont">
+            <div class="input_lable">
+              App PID
             </div>
+            <input type="text" name="app_stop" class="auth_user">
+          </div>
+          <div class="input_main_cont">
+            <button type="button"class="kalibu-decline-button">Stop</button>
           </div>
         </div>
       </div>

@@ -26,6 +26,7 @@ func main() {
   http.HandleFunc("/login", login)
   http.HandleFunc("/logout", logout)
   http.HandleFunc("/view", view)
+  http.HandleFunc("/all", all)
   http.HandleFunc("/", static)
 
   host := "localhost:2016"
@@ -144,6 +145,39 @@ func home(w http.ResponseWriter, r *http.Request)  {
   }
 }
 
+// view full information about the app
+func all(w http.ResponseWriter, r *http.Request)  {
+  log.Printf("%s: %s \n", r.Method, r.URL.Path)
+  cookie, err := r.Cookie("syamp")
+  if err != nil {
+    http.Redirect(w, r, "/login", http.StatusFound)
+    return
+  }
+
+  cont := contype.FileType(r.URL.Path)
+  var page WebPage
+  page.Title = "All Apps"
+
+  // Get the name of the root user
+  _, err = rootUsr(cookie.Value)
+  if err != nil {
+    log.Fatal(err)
+  }
+  page.First_Name = "gopher"
+
+  switch r.Method {
+    case "GET":
+      w.Header().Set("Content-Type", cont)
+      slice := []string {
+        "home-window-material",
+        "all-body",
+      }
+      Build(w, page, slice)
+    case "POST":
+      fmt.Fprintf(w, "post home")
+  }
+}
+
 
 // view full information about the app
 func view(w http.ResponseWriter, r *http.Request)  {
@@ -167,10 +201,10 @@ func view(w http.ResponseWriter, r *http.Request)  {
 
   switch r.Method {
     case "GET":
-      webtest := ubusuma.Webapp()
       query := r.FormValue("stdout")
       if query == "std" {
-        fmt.Fprintf(w, fmt.Sprintf("%s", <-webtest))
+        running := ubusuma.Runningapps()
+        fmt.Fprintf(w, <-running)
         return
       }
 
@@ -184,6 +218,7 @@ func view(w http.ResponseWriter, r *http.Request)  {
       fmt.Fprintf(w, "post home")
   }
 }
+
 
 
 ////////---for log in---///////

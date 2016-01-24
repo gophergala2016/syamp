@@ -1,4 +1,4 @@
-var output = document.querySelector("div.stdout_text");
+var output = document.querySelector("pre.stdout_text");
 var req = new XMLHttpRequest();
 function stdout() {
 	var q = "std";
@@ -19,4 +19,4 @@ function stdout() {
 	req.send(null);
 }
 
-setTimeout(stdout, 2000)
+setInterval(stdout, 500)

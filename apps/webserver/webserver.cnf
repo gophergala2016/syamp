@@ -1,6 +1,6 @@
 {
   "developer-name": "kampsy",
-  "icon": "icons/webserver.png",
+  "icon": "reVres/icons/webserver.png",
   "app-name": "webserver",
   "port": "2016",
   "host": "localhost"

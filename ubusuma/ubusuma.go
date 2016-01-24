@@ -14,7 +14,7 @@ import (
 func Webapp() <-chan string {
   c := make(chan string)
   go func() {
-    comm := "./app/webserver/webserver"
+    comm := "./apps/webserver/webserver"
 
     cmd := exec.Command(comm)
     byt, err := cmd.StdoutPipe()
@@ -31,6 +31,29 @@ func Webapp() <-chan string {
           c <- scanner.Text()
         }
 	    }()
+      time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+    }
+  }()
+
+  return c
+}
+
+// Generator
+func Runningapps() <-chan string {
+  c := make(chan string)
+  go func() {
+    comm := "ps"
+    args := []string {
+      "-a",
+    }
+
+    cmd := exec.Command(comm, args...)
+    byt, err := cmd.Output()
+    if err != nil {
+      fmt.Println(err)
+    }
+    for {
+      c <- fmt.Sprintf("%s", byt)
       time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
     }
   }()
