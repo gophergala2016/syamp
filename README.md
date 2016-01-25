@@ -49,6 +49,12 @@ User Interface
 ---------------
 The User interface is simple, morden and easy to work with.
 
+Dependencies
+-------------
+contype
+<br>
+https://github.com/kampsy/Go
+
 License
 -------
 MIT see license file.
