@@ -2,23 +2,23 @@
 ## syam{p}
 <a href="https://youtu.be/QiSiYVDjEw4">Play Screencast</a>
 
-syam{p} |pronounced as simp| brings the full power of the Linux Shell directly to your web browser. Run commands,
-monitor and kill programms etc in real time.
+syam{p} |pronounced as [simp]| brings the full power of the Linux Shell directly to your web browser. Run commands,
+monitor and kill programs etc. - in real time.
 
 Personal Benefit
 --------------------
-I built this app so that i can control and monitor programs on my Raspberypi B+ 2 running snappy ubuntu
+I built this app so that I could control and monitor programs on my Raspberypi B+ 2 running snappy ubuntu
 core 15.04.
-Currently, i use my laptop for this(i ssh into my pi). I hate that i have to move 
-to my computer room to power of my pi when am outside hunging out with friends, having my lunch or just feeling
-lazy to get out of bed when iam sleepy.
+Currently, I use my laptop for this (I ssh into my pi). I hate that I have to move 
+to my computer room to power off my pi when am outside hanging out with friends, having my lunch or just feeling
+lazy to get out of bed when I am sleepy.
 
-Now i can use my phone!
+Now I can use my phone!
 
 Note:
 -----
 You need to run syamp on the system you want to monitor.
-syam{p} only supports linux at the moment.
+syam{p} only supports Linux at the moment.
 
 Installation
 -------------
@@ -47,7 +47,7 @@ syam{p} runs an https server. All your commands are encypted with a 2048bit key 
 
 User Interface
 ---------------
-The User interface is simple, morden and easy to work with.
+The user interface is simple, modern and easy to work with.
 
 Dependencies
 -------------
@@ -57,7 +57,7 @@ https://github.com/kampsy/Go
 
 License
 -------
-MIT see license file.
+MIT - see license file.
 
 Developer
 ---------
